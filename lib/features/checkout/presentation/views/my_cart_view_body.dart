@@ -5,6 +5,8 @@ class MyCartViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(children: [
+      SizedBox(height: 18),
+      Image.asset('assets/images/basket.png')]);
   }
 }
