@@ -9,8 +9,6 @@ class PaymentIntegration extends StatelessWidget {
   const PaymentIntegration({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MyCartView(),
-    );
+    return MaterialApp(debugShowCheckedModeBanner: false, home: MyCartView());
   }
 }
