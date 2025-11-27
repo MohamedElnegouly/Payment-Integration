@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:payment_integration/core/utils/styles.dart';
-import 'package:payment_integration/features/checkout/presentation/views/my_cart_view_body.dart';
+import 'package:payment_integration/features/checkout/presentation/views/widgets/my_cart_view_body.dart';
 
 class MyCartView extends StatelessWidget {
   const MyCartView({super.key});
