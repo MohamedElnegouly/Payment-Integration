@@ -1,34 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:payment_integration/features/checkout/presentation/views/widgets/payment_method_item.dart';
 
 class PaymentDeyailsViewBody extends StatelessWidget {
   const PaymentDeyailsViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 103,
-      height: 62,
-      decoration: ShapeDecoration(
-        shape: RoundedRectangleBorder(
-          side: BorderSide(width: 1.50, color: const Color(0xFF34A853)),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        shadows: [
-          BoxShadow(
-            color: Color(0xFF34A853),
-            blurRadius: 4,
-            offset: Offset(0, 0),
-            spreadRadius: 0,
-          ),
-        ],
-      ),
-      child: Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Colors.white, ), 
-        child: Center(
-          child: SvgPicture.asset('assets/images/cart.svg', height: 30),
-        ),
-      ),
-    );
+    return PaymentMethodItem(isActive: true);
   }
 }
