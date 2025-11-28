@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  flutter_credit_card: ^4.1.0
   flutter_svg: ^2.2.3
   flutter:
     sdk: flutter
