@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 
 class CustomCreditCart extends StatefulWidget {
-  const CustomCreditCart({super.key});
+  const CustomCreditCart({super.key, required this.formKey});
+  final GlobalKey<FormState> formKey;
   @override
   State<CustomCreditCart> createState() => _CustomCreditCartState();
 }
-
 class _CustomCreditCartState extends State<CustomCreditCart> {
   String cardNumber = '', expiryDate = '', cardHolderName = '', cvvCode = '';
   bool showBackView = false;
-  final GlobalKey<FormState> formKey = GlobalKey();
+  
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,7 +37,7 @@ class _CustomCreditCartState extends State<CustomCreditCart> {
             showBackView = creditCardModel.isCvvFocused;
             setState(() {});
           },
-          formKey: formKey,
+          formKey: widget.formKey,
         ),
       ],
     );
