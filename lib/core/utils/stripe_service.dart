@@ -24,7 +24,7 @@ class StripeService {
   }
 
   Future initPaymentSheet({required String paymentIntentClientSecret}) async {
-     Stripe.instance.initPaymentSheet(
+    Stripe.instance.initPaymentSheet(
       paymentSheetParameters: SetupPaymentSheetParameters(
         paymentIntentClientSecret: paymentIntentClientSecret,
         merchantDisplayName: 'Mohamed Elngouly',
@@ -32,7 +32,18 @@ class StripeService {
     );
   }
 
-  Future presentPaymentSheet() async {
+  Future displayPaymentSheet() async {
     Stripe.instance.presentPaymentSheet();
+  }
+
+  // this step to start payment flow (create make method that contain all steps)
+  Future makePayment({
+    required PaymentIntentInputModel paymentIntentInputModel,
+  }) async {
+    var paymentintentmodel = await createPaymentIntent(paymentIntentInputModel);
+    await initPaymentSheet(
+      paymentIntentClientSecret: paymentintentmodel.clientSecret!,
+    );
+    await displayPaymentSheet();
   }
 }
