@@ -4,6 +4,11 @@ import 'package:payment_integration/core/utils/api_service.dart';
 import 'package:payment_integration/features/checkout/data/models/payment_intent_input_model.dart';
 import 'package:payment_integration/features/checkout/data/models/payment_intent_model/payment_intent_model.dart';
 
+//flow
+//paymentintentobject create payment intent (amount , currency)
+// init payment sheet (paymentIntentClientSecret)
+// present payment sheet
+
 class StripeService {
   final ApiService apiService = ApiService();
   Future<PaymentIntentModel> createPaymentIntent(
@@ -18,12 +23,16 @@ class StripeService {
     return paymentIntentModel;
   }
 
-  Future initPaymentSheet ({required String paymentIntentClientSecret})async {
-    await Stripe.instance.initPaymentSheet(
-      paymentSheetParameters:SetupPaymentSheetParameters(
-      paymentIntentClientSecret: paymentIntentClientSecret,
-      merchantDisplayName: 'Mohamed Elngouly',
-    ));
+  Future initPaymentSheet({required String paymentIntentClientSecret}) async {
+     Stripe.instance.initPaymentSheet(
+      paymentSheetParameters: SetupPaymentSheetParameters(
+        paymentIntentClientSecret: paymentIntentClientSecret,
+        merchantDisplayName: 'Mohamed Elngouly',
+      ),
+    );
   }
 
+  Future presentPaymentSheet() async {
+    Stripe.instance.presentPaymentSheet();
+  }
 }
