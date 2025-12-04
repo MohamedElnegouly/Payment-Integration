@@ -38,9 +38,12 @@ class PaymentMethodItem extends StatelessWidget {
           color: Colors.white,
         ),
         child: Center(
-          child: SvgPicture.asset(image, height: 30,
-          // not skipping the original size 
-           fit: BoxFit.scaleDown),
+          child: SvgPicture.asset(
+            image,
+            height: 30,
+            // not skipping the original size
+            fit: BoxFit.scaleDown,
+          ),
         ),
       ),
     );

@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 
 class CustomCreditCart extends StatefulWidget {
-  const CustomCreditCart({super.key, required this.formKey, required this.autovalidateMode});
+  const CustomCreditCart({
+    super.key,
+    required this.formKey,
+    required this.autovalidateMode,
+  });
   final GlobalKey<FormState> formKey;
   final AutovalidateMode autovalidateMode;
   @override

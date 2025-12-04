@@ -12,7 +12,8 @@ class PaymentIntegration extends StatelessWidget {
     return MaterialApp(debugShowCheckedModeBanner: false, home: MyCartView());
   }
 }
+
 //flow
 //paymentintentobject create payment intent (amount , currency)
-// init payment sheet (paymentIntentClientSecret) 
+// init payment sheet (paymentIntentClientSecret)
 // present payment sheet

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CardWidgetInfo extends StatelessWidget {
-  const CardWidgetInfo({
-    super.key,
-  });
+  const CardWidgetInfo({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +11,7 @@ class CardWidgetInfo extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: ShapeDecoration(
         color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       ),
       child: Row(
         children: [
