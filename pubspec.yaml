@@ -33,6 +33,7 @@ dependencies:
   dio: ^5.9.0
   flutter:
     sdk: flutter
+  flutter_bloc: ^9.1.1
   flutter_credit_card: ^4.1.0
   flutter_stripe: ^12.1.1
   flutter_svg: ^2.2.3
