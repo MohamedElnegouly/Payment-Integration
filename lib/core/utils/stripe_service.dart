@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:payment_integration/core/utils/api_keys.dart';
 import 'package:payment_integration/core/utils/api_service.dart';
@@ -16,6 +17,7 @@ class StripeService {
   ) async {
     var response = await apiService.post(
       url: 'https://api.stripe.com/v1/payment_intents',
+      contentType: Headers.formUrlEncodedContentType,
       token: ApiKeys.secretKey,
       body: paymentIntentInputModel.tojson(),
     );
@@ -24,7 +26,7 @@ class StripeService {
   }
 
   Future initPaymentSheet({required String paymentIntentClientSecret}) async {
-    Stripe.instance.initPaymentSheet(
+   await Stripe.instance.initPaymentSheet(
       paymentSheetParameters: SetupPaymentSheetParameters(
         paymentIntentClientSecret: paymentIntentClientSecret,
         merchantDisplayName: 'Mohamed Elngouly',
@@ -33,7 +35,7 @@ class StripeService {
   }
 
   Future displayPaymentSheet() async {
-    Stripe.instance.presentPaymentSheet();
+   await Stripe.instance.presentPaymentSheet();
   }
 
   // this step to start payment flow (create make method that contain all steps)
