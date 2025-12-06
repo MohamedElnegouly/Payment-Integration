@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:payment_integration/core/widgets/custom_button.dart';
-import 'package:payment_integration/features/checkout/presentation/views/payment_details.dart';
+import 'package:payment_integration/features/checkout/presentation/views/widgets/custom_buttom_bloc_consumer.dart';
 import 'package:payment_integration/features/checkout/presentation/views/widgets/payment_methods_list_view.dart';
 
 class PaymentMethodsButtomSheet extends StatelessWidget {
@@ -16,18 +15,7 @@ class PaymentMethodsButtomSheet extends StatelessWidget {
           const SizedBox(height: 8),
           PaymentmethodListView(),
           const SizedBox(height: 16),
-          CustomButton(
-            buttonText: 'Continue',
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return PaymentDetails();
-                  },
-                ),
-              );
-            },
-          ),
+          CustomButtomBlocConsumer(),
         ],
       ),
     );

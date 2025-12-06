@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:payment_integration/core/widgets/custom_button.dart';
+import 'package:payment_integration/features/checkout/data/repos/checkout_repo_impl.dart';
+import 'package:payment_integration/features/checkout/presentation/manager/cubit/payment_cubit.dart';
 import 'package:payment_integration/features/checkout/presentation/views/widgets/order_Info_Item.dart';
 import 'package:payment_integration/features/checkout/presentation/views/widgets/payment_methods_buttom_sheet.dart';
 import 'package:payment_integration/features/checkout/presentation/views/widgets/total_price.dart';
@@ -29,7 +32,10 @@ class MyCartViewBody extends StatelessWidget {
               showModalBottomSheet(
                 context: context,
                 builder: (context) {
-                  return PaymentMethodsButtomSheet();
+                  return BlocProvider(
+                    create: (context) => PaymentCubit(CheckoutRepoImpl()),
+                    child: PaymentMethodsButtomSheet(),
+                  );
                 },
               );
             },
