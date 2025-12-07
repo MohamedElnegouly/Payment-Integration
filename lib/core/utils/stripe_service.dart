@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:payment_integration/core/utils/api_keys.dart';
 import 'package:payment_integration/core/utils/api_service.dart';
+import 'package:payment_integration/features/checkout/data/models/customer_sessions_model/customer_sessions_model.dart';
 import 'package:payment_integration/features/checkout/data/models/payment_intent_input_model.dart';
 import 'package:payment_integration/features/checkout/data/models/payment_intent_model/payment_intent_model.dart';
 
@@ -23,6 +24,22 @@ class StripeService {
     );
     var paymentIntentModel = PaymentIntentModel.fromJson(response.data);
     return paymentIntentModel;
+  }
+  
+  Future<CustomerSessionsModel> customerSessions(
+    {required customerId}
+  ) async {
+    var response = await apiService.post(
+      url: 'https://api.stripe.com/v1/customer_sessions',
+      contentType: Headers.formUrlEncodedContentType,
+      token: ApiKeys.secretKey,
+      body: {
+        'customer':customerId,
+        "components[mobile_payment_element][enabled]" :"true",
+      },
+    );
+    var customerSessions = CustomerSessionsModel.fromJson(response.data);
+    return customerSessions;
   }
 
   Future initPaymentSheet({required String paymentIntentClientSecret}) async {
