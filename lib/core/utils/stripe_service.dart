@@ -26,7 +26,7 @@ class StripeService {
   }
 
   Future initPaymentSheet({required String paymentIntentClientSecret}) async {
-   await Stripe.instance.initPaymentSheet(
+    await Stripe.instance.initPaymentSheet(
       paymentSheetParameters: SetupPaymentSheetParameters(
         paymentIntentClientSecret: paymentIntentClientSecret,
         merchantDisplayName: 'Mohamed Elngouly',
@@ -35,7 +35,7 @@ class StripeService {
   }
 
   Future displayPaymentSheet() async {
-   await Stripe.instance.presentPaymentSheet();
+    await Stripe.instance.presentPaymentSheet();
   }
 
   // this step to start payment flow (create make method that contain all steps)

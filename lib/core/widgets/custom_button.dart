@@ -3,7 +3,12 @@ import 'package:flutter/widgets.dart';
 import 'package:payment_integration/core/utils/styles.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key, this.onTap, required this.buttonText, this.isLoading = false});
+  const CustomButton({
+    super.key,
+    this.onTap,
+    required this.buttonText,
+    this.isLoading = false,
+  });
   final void Function()? onTap;
   final String buttonText;
   final bool isLoading;
@@ -21,11 +26,13 @@ class CustomButton extends StatelessWidget {
           ),
         ),
         child: Center(
-          child: isLoading ? CircularProgressIndicator() : Text(
-            buttonText,
-            textAlign: TextAlign.center,
-            style: Styles.style22,
-          ),
+          child: isLoading
+              ? CircularProgressIndicator()
+              : Text(
+                  buttonText,
+                  textAlign: TextAlign.center,
+                  style: Styles.style22,
+                ),
         ),
       ),
     );
