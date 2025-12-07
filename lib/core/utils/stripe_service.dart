@@ -3,6 +3,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:payment_integration/core/utils/api_keys.dart';
 import 'package:payment_integration/core/utils/api_service.dart';
 import 'package:payment_integration/features/checkout/data/models/customer_sessions_model/customer_sessions_model.dart';
+import 'package:payment_integration/features/checkout/data/models/init_payment_sheet_input_model.dart';
 import 'package:payment_integration/features/checkout/data/models/payment_intent_input_model.dart';
 import 'package:payment_integration/features/checkout/data/models/payment_intent_model/payment_intent_model.dart';
 
@@ -42,10 +43,12 @@ class StripeService {
     return customerSessions;
   }
 
-  Future initPaymentSheet({required String paymentIntentClientSecret}) async {
+  Future initPaymentSheet({required InitPaymentSheetInputModel initpaymentsheetinputmodel}) async {
     await Stripe.instance.initPaymentSheet(
       paymentSheetParameters: SetupPaymentSheetParameters(
-        paymentIntentClientSecret: paymentIntentClientSecret,
+        paymentIntentClientSecret: initpaymentsheetinputmodel.clientSecret,
+        customerSessionClientSecret:initpaymentsheetinputmodel.customerSession,
+        customerId: initpaymentsheetinputmodel.customerId,
         merchantDisplayName: 'Mohamed Elngouly',
       ),
     );
@@ -60,8 +63,10 @@ class StripeService {
     required PaymentIntentInputModel paymentIntentInputModel,
   }) async {
     var paymentintentmodel = await createPaymentIntent(paymentIntentInputModel);
+    var customerSession = await customerSessions(customerId:  paymentIntentInputModel.customerId);
+    var initpaymentsheetinputmodel = InitPaymentSheetInputModel(clientSecret:paymentintentmodel.clientSecret! , customerSession: customerSession.clientSecret! , customerId: paymentIntentInputModel.customerId);
     await initPaymentSheet(
-      paymentIntentClientSecret: paymentintentmodel.clientSecret!,
+      initpaymentsheetinputmodel:initpaymentsheetinputmodel,
     );
     await displayPaymentSheet();
   }

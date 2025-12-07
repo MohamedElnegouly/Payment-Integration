@@ -1,12 +1,10 @@
 class Features {
-  List<String>? paymentMethodAllowRedisplayFilters;
   String? paymentMethodRedisplay;
   String? paymentMethodRemove;
   String? paymentMethodSave;
   dynamic paymentMethodSaveAllowRedisplayOverride;
 
   Features({
-    this.paymentMethodAllowRedisplayFilters,
     this.paymentMethodRedisplay,
     this.paymentMethodRemove,
     this.paymentMethodSave,
@@ -14,8 +12,6 @@ class Features {
   });
 
   factory Features.fromJson(Map<String, dynamic> json) => Features(
-    paymentMethodAllowRedisplayFilters:
-        json['payment_method_allow_redisplay_filters'] as List<String>?,
     paymentMethodRedisplay: json['payment_method_redisplay'] as String?,
     paymentMethodRemove: json['payment_method_remove'] as String?,
     paymentMethodSave: json['payment_method_save'] as String?,
@@ -24,8 +20,6 @@ class Features {
   );
 
   Map<String, dynamic> toJson() => {
-    'payment_method_allow_redisplay_filters':
-        paymentMethodAllowRedisplayFilters,
     'payment_method_redisplay': paymentMethodRedisplay,
     'payment_method_remove': paymentMethodRemove,
     'payment_method_save': paymentMethodSave,
