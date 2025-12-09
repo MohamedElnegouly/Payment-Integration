@@ -26,28 +26,28 @@ class StripeService {
     var paymentIntentModel = PaymentIntentModel.fromJson(response.data);
     return paymentIntentModel;
   }
-  
-  Future<CustomerSessionsModel> customerSessions(
-    {required customerId}
-  ) async {
+
+  Future<CustomerSessionsModel> customerSessions({required customerId}) async {
     var response = await apiService.post(
       url: 'https://api.stripe.com/v1/customer_sessions',
       contentType: Headers.formUrlEncodedContentType,
       token: ApiKeys.secretKey,
       body: {
-        'customer':customerId,
-        "components[mobile_payment_element][enabled]" :"true",
+        'customer': customerId,
+        "components[mobile_payment_element][enabled]": "true",
       },
     );
     var customerSessions = CustomerSessionsModel.fromJson(response.data);
     return customerSessions;
   }
 
-  Future initPaymentSheet({required InitPaymentSheetInputModel initpaymentsheetinputmodel}) async {
+  Future initPaymentSheet({
+    required InitPaymentSheetInputModel initpaymentsheetinputmodel,
+  }) async {
     await Stripe.instance.initPaymentSheet(
       paymentSheetParameters: SetupPaymentSheetParameters(
         paymentIntentClientSecret: initpaymentsheetinputmodel.clientSecret,
-        customerSessionClientSecret:initpaymentsheetinputmodel.customerSession,
+        customerSessionClientSecret: initpaymentsheetinputmodel.customerSession,
         customerId: initpaymentsheetinputmodel.customerId,
         merchantDisplayName: 'Mohamed Elngouly',
       ),
@@ -63,10 +63,16 @@ class StripeService {
     required PaymentIntentInputModel paymentIntentInputModel,
   }) async {
     var paymentintentmodel = await createPaymentIntent(paymentIntentInputModel);
-    var customerSession = await customerSessions(customerId:  paymentIntentInputModel.customerId);
-    var initpaymentsheetinputmodel = InitPaymentSheetInputModel(clientSecret:paymentintentmodel.clientSecret! , customerSession: customerSession.clientSecret! , customerId: paymentIntentInputModel.customerId);
+    var customerSession = await customerSessions(
+      customerId: paymentIntentInputModel.customerId,
+    );
+    var initpaymentsheetinputmodel = InitPaymentSheetInputModel(
+      clientSecret: paymentintentmodel.clientSecret!,
+      customerSession: customerSession.clientSecret!,
+      customerId: paymentIntentInputModel.customerId,
+    );
     await initPaymentSheet(
-      initpaymentsheetinputmodel:initpaymentsheetinputmodel,
+      initpaymentsheetinputmodel: initpaymentsheetinputmodel,
     );
     await displayPaymentSheet();
   }

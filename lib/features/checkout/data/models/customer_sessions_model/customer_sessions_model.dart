@@ -27,7 +27,7 @@ class CustomerSessionsModel {
           ? null
           : Components.fromJson(json['components'] as Map<String, dynamic>),
       created: json['created'] as int?,
-      customer: json['customer'] as String?,  
+      customer: json['customer'] as String?,
       expiresAt: json['expires_at'] as int?,
       livemode: json['livemode'] as bool?,
     );
