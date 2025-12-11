@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:payment_integration/features/checkout/presentation/views/widgets/payment_method_item.dart';
 
 class PaymentmethodListView extends StatefulWidget {
-  const PaymentmethodListView({super.key});
-
+  const PaymentmethodListView({super.key, required this.updatePaymentMethod});
+  final Function({required int index}) updatePaymentMethod;
   @override
   State<PaymentmethodListView> createState() => _PaymentmethodListViewState();
 }
@@ -30,6 +30,7 @@ class _PaymentmethodListViewState extends State<PaymentmethodListView> {
               onTap: () {
                 isactive = index;
                 setState(() {});
+                widget.updatePaymentMethod(index: index);
               },
               child: PaymentMethodItem(
                 isActive: isactive == index,

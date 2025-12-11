@@ -14,8 +14,8 @@ import 'package:payment_integration/features/checkout/presentation/manager/cubit
 import 'package:payment_integration/features/checkout/presentation/views/thank_you_view.dart';
 
 class CustomButtomBlocConsumer extends StatelessWidget {
-  const CustomButtomBlocConsumer({super.key});
-
+  const CustomButtomBlocConsumer({super.key, required this.isPaypal});
+  final bool isPaypal;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PaymentCubit, PaymentState>(
@@ -38,17 +38,12 @@ class CustomButtomBlocConsumer extends StatelessWidget {
       builder: (context, state) {
         return CustomButton(
           onTap: () {
-            // PaymentIntentInputModel paymentIntentInputModel =
-            //     PaymentIntentInputModel(
-            //       amount: '100',
-            //       currency: 'USD',
-            //       customerId: 'cus_TYrqErqdt7EC78',
-            //     );
-            // BlocProvider.of<PaymentCubit>(
-            //   context,
-            // ).makePayment(paymentIntentInputModel: paymentIntentInputModel);
-            var transaction = transactionData();
-            excutepaypalPayment(context, transaction);
+            if (isPaypal) {
+              var transaction = transactionData();
+              excutepaypalPayment(context, transaction);
+            } else {
+              excuteStripePayment(context);
+            }
           },
           isLoading: state is Paymentloading ? true : false,
           buttonText: 'Continue',
@@ -57,7 +52,22 @@ class CustomButtomBlocConsumer extends StatelessWidget {
     );
   }
 
-  void excutepaypalPayment(BuildContext context, ({AmountModel amount, ItemListModel itemList}) transactionData) {
+  void excuteStripePayment(BuildContext context) {
+    PaymentIntentInputModel paymentIntentInputModel =
+        PaymentIntentInputModel(
+          amount: '100',
+          currency: 'USD',
+          customerId: 'cus_TYrqErqdt7EC78',
+        );
+    BlocProvider.of<PaymentCubit>(
+      context,
+    ).makePayment(paymentIntentInputModel: paymentIntentInputModel);
+  }
+
+  void excutepaypalPayment(
+    BuildContext context,
+    ({AmountModel amount, ItemListModel itemList}) transactionData,
+  ) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) => PaypalCheckoutView(
@@ -67,9 +77,9 @@ class CustomButtomBlocConsumer extends StatelessWidget {
           secretKey: ApiKeys.paypalsecretKey,
           transactions: [
             {
-              "amount":transactionData.amount.toJson(),
+              "amount": transactionData.amount.toJson(),
               "description": "The payment transaction description.",
-              "item_list":transactionData.itemList.toJson(),
+              "item_list": transactionData.itemList.toJson(),
             },
           ],
           note: "Contact us for any questions on your order.",
