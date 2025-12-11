@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
+import 'package:payment_integration/core/utils/api_keys.dart';
 import 'package:payment_integration/core/widgets/custom_button.dart';
 import 'package:payment_integration/features/checkout/data/models/amount_model/amount_model.dart';
 import 'package:payment_integration/features/checkout/data/models/amount_model/details.dart';
@@ -56,19 +57,19 @@ class CustomButtomBlocConsumer extends StatelessWidget {
     );
   }
 
-  void excutepaypalPayment(BuildContext context, ({AmountModel amount, ItemListModel itemList}) transaction) {
+  void excutepaypalPayment(BuildContext context, ({AmountModel amount, ItemListModel itemList}) transactionData) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) => PaypalCheckoutView(
           //test mode
           sandboxMode: true,
-          clientId: "",
-          secretKey: "",
+          clientId: ApiKeys.clientId,
+          secretKey: ApiKeys.paypalsecretKey,
           transactions: [
             {
-              "amount":transaction.amount.toJson(),
+              "amount":transactionData.amount.toJson(),
               "description": "The payment transaction description.",
-              "item_list": {"items":transaction.itemList.toJson()},
+              "item_list":transactionData.itemList.toJson(),
             },
           ],
           note: "Contact us for any questions on your order.",
