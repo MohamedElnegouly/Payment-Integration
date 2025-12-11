@@ -53,12 +53,11 @@ class CustomButtomBlocConsumer extends StatelessWidget {
   }
 
   void excuteStripePayment(BuildContext context) {
-    PaymentIntentInputModel paymentIntentInputModel =
-        PaymentIntentInputModel(
-          amount: '100',
-          currency: 'USD',
-          customerId: 'cus_TYrqErqdt7EC78',
-        );
+    PaymentIntentInputModel paymentIntentInputModel = PaymentIntentInputModel(
+      amount: '100',
+      currency: 'USD',
+      customerId: 'cus_TYrqErqdt7EC78',
+    );
     BlocProvider.of<PaymentCubit>(
       context,
     ).makePayment(paymentIntentInputModel: paymentIntentInputModel);
@@ -85,6 +84,21 @@ class CustomButtomBlocConsumer extends StatelessWidget {
           note: "Contact us for any questions on your order.",
           onSuccess: (Map params) async {
             log("onSuccess: $params");
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return ThankYouView();
+                },
+              ),
+              (route) {
+                if (route.settings.name == '/') {
+                  return true;
+                } else {
+                  return false;
+                }
+              },
+            );
           },
           onError: (error) {
             log("onError: $error");
