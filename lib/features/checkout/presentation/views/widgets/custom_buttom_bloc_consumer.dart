@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
+import 'package:payment_integration/core/functions/transaction_data.dart';
 import 'package:payment_integration/core/utils/api_keys.dart';
 import 'package:payment_integration/core/widgets/custom_button.dart';
 import 'package:payment_integration/features/checkout/data/models/amount_model/amount_model.dart';
@@ -11,6 +12,7 @@ import 'package:payment_integration/features/checkout/data/models/item_list_mode
 import 'package:payment_integration/features/checkout/data/models/item_list_model/item_list_model.dart';
 import 'package:payment_integration/features/checkout/data/models/payment_intent_input_model.dart';
 import 'package:payment_integration/features/checkout/presentation/manager/cubit/payment_cubit.dart';
+import 'package:payment_integration/features/checkout/presentation/views/my_cart_view.dart';
 import 'package:payment_integration/features/checkout/presentation/views/thank_you_view.dart';
 
 class CustomButtomBlocConsumer extends StatelessWidget {
@@ -101,8 +103,19 @@ class CustomButtomBlocConsumer extends StatelessWidget {
             );
           },
           onError: (error) {
-            log("onError: $error");
-            Navigator.pop(context);
+            SnackBar snackBar = SnackBar(content: Text(error.toString()));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return MyCartView();
+                },
+              ),
+              (route) {
+                return false;
+              },
+            );
           },
           onCancel: () {
             log('cancelled:');
@@ -112,17 +125,5 @@ class CustomButtomBlocConsumer extends StatelessWidget {
     );
   }
 
-  ({AmountModel amount, ItemListModel itemList}) transactionData() {
-    var amount = AmountModel(
-      currency: 'USD',
-      total: '100',
-      details: Details(shipping: "0", shippingDiscount: 0, subtotal: '100'),
-    );
-    List<OrderItemModel> orders = [
-      OrderItemModel(name: 'Apple', quantity: 10, price: "4", currency: 'USD'),
-      OrderItemModel(name: 'Apple', quantity: 12, price: "5", currency: 'USD'),
-    ];
-    var itemList = ItemListModel(items: orders);
-    return (amount: amount, itemList: itemList);
-  }
+  
 }

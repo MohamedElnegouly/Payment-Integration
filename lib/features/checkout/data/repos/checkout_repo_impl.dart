@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:payment_integration/core/errors/failure.dart';
 import 'package:payment_integration/core/utils/stripe_service.dart';
 import 'package:payment_integration/features/checkout/data/models/payment_intent_input_model.dart';
@@ -15,7 +16,10 @@ class CheckoutRepoImpl extends CheckoutRepo {
         paymentIntentInputModel: paymentIntentInputModel,
       );
       return Right(null);
-    } catch (e) {
+    } on StripeException catch (e){
+      return Left(ServerError(e.error.message ?? "Oops therre was an error"));
+    }
+    catch (e) {
       return Left(ServerError(e.toString()));
     }
   }
